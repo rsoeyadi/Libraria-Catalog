@@ -1,1 +1,1 @@
-Use the command ``uvicorn main:app --reload`` to run the service
+Use the command ``python main.py`` to run the service
