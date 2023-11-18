@@ -95,7 +95,17 @@ def get_book_for_a_category():
     return jsonify(result)
 
 # get a specific book info
-# to-do
+@app.route('/books/info')
+def get_book_with_isbn():
+    isbn = request.args.get("isbn")
+    cur = connection.cursor()
+    cur.execute(f"SELECT * FROM books WHERE ISBN = '{isbn}'")
+    result = cur.fetchall()
+    cur.close()
+    if not result:
+        return "NULL"
+    return jsonify(result)
+
 
 # add a book
 @app.route('/books', methods=['POST'])
