@@ -112,8 +112,6 @@ def get_book_with_isbn():
     cur.execute(f"SELECT * FROM books WHERE ISBN = '{isbn}'")
     result = cur.fetchall()
     cur.close()
-    if not result:
-        return {"key": "NULL"}
     return jsonify(result)
 
 
