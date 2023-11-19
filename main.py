@@ -144,7 +144,7 @@ def update_book_status():
     status = request.form['status']
 
     cur = connection.cursor()
-    cur.execute(f"UPDATE books SET Status = '{status}' WHERE ISBN = {isbn}")
+    cur.execute(f"UPDATE books SET Status = '{status}' WHERE ISBN = '{isbn}'")
     cur.close()
 
     return redirect('/books')
@@ -157,7 +157,7 @@ def delete_book():
     isbn = request.form['isbn']
 
     cur = connection.cursor()
-    cur.execute(f"DELETE FROM books WHERE ISBN = {isbn}")
+    cur.execute(f"DELETE FROM books WHERE ISBN = '{isbn}'")
     cur.close()
 
     return redirect('/books')
