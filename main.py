@@ -113,7 +113,7 @@ def get_book_with_isbn():
     result = cur.fetchall()
     cur.close()
     if not result:
-        return "NULL"
+        return {"key": "NULL}
     return jsonify(result)
 
 
