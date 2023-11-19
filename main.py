@@ -32,13 +32,15 @@ def get_book_titles():
     return jsonify(result)
 
 # get all books with page number + limits. If page == 0, return all
+
+
 @app.route("/books")
 def get_book_info():
     page_num_str = request.args.get("page")
     limit_str = request.args.get("limit")
     cur = connection.cursor()
 
-    if not page_num_str: 
+    if not page_num_str:
         cur.execute("SELECT * FROM books")
         result = cur.fetchall()
         cur.close()
@@ -46,7 +48,7 @@ def get_book_info():
 
     page_num = int(page_num_str)
     limit = int(limit_str)
-    
+
     # if not specify page, or set it to 0
     # we return all books
     if page_num == 0:
@@ -59,6 +61,8 @@ def get_book_info():
     return jsonify(result)
 
 # get books with same author
+
+
 @app.route("/books/authors")
 def get_book_info_for_an_author():
     author = request.args.get("author")
@@ -71,6 +75,8 @@ def get_book_info_for_an_author():
     return jsonify(result)
 
 # get books with same genre
+
+
 @app.route("/books/genres")
 def get_book_for_a_genre():
     genre = request.args.get("genre")
@@ -83,6 +89,8 @@ def get_book_for_a_genre():
     return jsonify(result)
 
 # get books with same category
+
+
 @app.route("/books/categories")
 def get_book_for_a_category():
     category = request.args.get("category")
@@ -95,6 +103,8 @@ def get_book_for_a_category():
     return jsonify(result)
 
 # get a specific book info
+
+
 @app.route('/books/info')
 def get_book_with_isbn():
     isbn = request.args.get("isbn")
@@ -119,12 +129,15 @@ def add_book():
     status = "Available"
 
     cur = connection.cursor()
-    cur.execute(f"INSERT INTO books(ISBN, Title, Author, Genre, Category, Edition, Status) VALUES('{isbn}', '{title}', '{author}', '{genre}', '{category}', '{edition}', '{status}')")
+    cur.execute(
+        f"INSERT INTO books(ISBN, Title, Author, Genre, Category, Edition, Status) VALUES('{isbn}', '{title}', '{author}', '{genre}', '{category}', '{edition}', '{status}')")
     cur.close()
 
     return redirect('/books')
 
 # update a book status
+
+
 @app.route('/books', methods=['PUT'])
 def update_book_status():
     isbn = request.form['isbn']
@@ -137,6 +150,8 @@ def update_book_status():
     return redirect('/books')
 
 # remove a book
+
+
 @app.route('/books', methods=['DELETE'])
 def delete_book():
     isbn = request.form['isbn']
@@ -147,10 +162,12 @@ def delete_book():
 
     return redirect('/books')
 
+
 @app.get("/")
 def root():
     return {"message": "This microservice is for our library catalog."}
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
-    #app.run(app, host="0.0.0.0", port=8000)
+    # app.run(debug=True)
+    app.run(host="0.0.0.0", port=8000)
