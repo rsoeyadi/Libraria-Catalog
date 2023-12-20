@@ -20,6 +20,18 @@ connection = pymysql.connect(
 app = Flask(__name__)
 CORS(app)
 
+@app.before_request
+def log_request():
+    log_info = f"Request URL: {request.url}\nMethod: {request.method}\n"
+    with open('log_file.txt', 'a') as log_file:
+        log_file.write(log_info)
+
+@app.after_request
+def calling_success(response):
+    with open('log_file.txt', 'a') as log_file:
+        log_file.write("calling successfully\n")
+    
+    return response
 
 # The response model is a list of strings since you're only returning titles
 @app.route("/books/titles")
@@ -32,8 +44,6 @@ def get_book_titles():
     return jsonify(result)
 
 # get all books with page number + limits. If page == 0, return all
-
-
 @app.route("/books")
 def get_book_info():
     page_num_str = request.args.get("page")
@@ -61,8 +71,6 @@ def get_book_info():
     return jsonify(result)
 
 # get books with same author
-
-
 @app.route("/books/authors")
 def get_book_info_for_an_author():
     author = request.args.get("author")
@@ -75,8 +83,6 @@ def get_book_info_for_an_author():
     return jsonify(result)
 
 # get books with same genre
-
-
 @app.route("/books/genres")
 def get_book_for_a_genre():
     genre = request.args.get("genre")
@@ -89,8 +95,6 @@ def get_book_for_a_genre():
     return jsonify(result)
 
 # get books with same category
-
-
 @app.route("/books/categories")
 def get_book_for_a_category():
     category = request.args.get("category")
@@ -103,8 +107,6 @@ def get_book_for_a_category():
     return jsonify(result)
 
 # get a specific book info
-
-
 @app.route('/books/info')
 def get_book_with_isbn():
     isbn = request.args.get("isbn")
@@ -134,8 +136,6 @@ def add_book():
     return redirect('/books')
 
 # update a book status
-
-
 @app.route('/books', methods=['PUT'])
 def update_book_status():
     isbn = request.form['isbn']
@@ -148,8 +148,6 @@ def update_book_status():
     return redirect('/books')
 
 # remove a book
-
-
 @app.route('/books', methods=['DELETE'])
 def delete_book():
     isbn = request.form['isbn']
