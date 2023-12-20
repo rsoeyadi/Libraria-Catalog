@@ -3,10 +3,10 @@ import pymysql
 from flask_cors import CORS
 
 # Set the database credentials
-host = 'database-1.cwruyiuygx34.us-east-2.rds.amazonaws.com'
+host = 'the-best-database.cwruyiuygx34.us-east-2.rds.amazonaws.com'
 port = 3306
 user = 'admin'
-password = 'password'
+password = 'fu3a3A!i#'
 database = 'library_system'
 
 # Connect to the database
